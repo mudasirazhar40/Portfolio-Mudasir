@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technical Skills & Engineering Vault | Mudasir Portfolio</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            theme: {
+              primary: 'var(--color-primary, #9333ea)',
+              light: 'var(--color-light, #f3e8ff)',
+              hover: 'var(--color-hover, #7e22ce)',
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Lenis Smooth Scroll CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.9/dist/lenis.css">
+
+  <!-- Custom CSS Link -->
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* RESPONSIVE TIMELINE SCROLL LINE (MOBILE LEFT / DESKTOP CENTER) */
+    .skills-line-svg {
+      position: absolute;
+      top: 0;
+      left: 24px;
+      transform: none;
+      width: 8px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @media (min-width: 768px) {
+      .skills-line-svg {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 900px;
+      }
+    }
+
+    .skills-path-bg {
+      stroke: rgba(209, 213, 219, 0.9);
+      stroke-width: 4px;
+      stroke-dasharray: 8 8;
+    }
+
+    .skills-path-active {
+      stroke: var(--color-primary, #9333ea);
+      stroke-width: 5px;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 10px var(--color-primary, #9333ea));
+      transition: stroke 0.3s ease;
+    }
+
+    .skill-timeline-card {
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0.35;
+      transform: translateY(35px) scale(0.96);
+    }
+
+    .skill-timeline-card.active-skill-card {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .skill-timeline-card.active-skill-card .skill-icon-box {
+      background-color: var(--color-primary, #9333ea);
+      color: #ffffff;
+      box-shadow: 0 12px 28px -5px var(--color-primary, #9333ea);
+      transform: scale(1.1) rotate(3deg);
+    }
+
+    .skill-progress-bar {
+      width: 0%;
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .active-skill-card .skill-progress-bar {
+      width: var(--target-width, 90%);
+    }
+  </style>
+</head>
+<body data-theme="purple" class="bg-dynamic-gradient text-gray-900 font-sans relative overflow-x-hidden min-h-screen selection:bg-theme-light">
+
+  <!-- BACKGROUND DECORATIVE GLOW ORBS -->
+  <div class="fixed top-0 left-1/4 w-96 h-96 bg-theme-primary/10 rounded-full blur-3xl pointer-events-none -z-10 animate-ambient-orb"></div>
+  <div class="fixed bottom-1/3 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none -z-10 animate-ambient-orb" style="animation-delay: -3s;"></div>
+
+  <!-- MOBILE-RESPONSIVE COLOR SWITCHER -->
+  <div class="fixed left-1/2 -translate-x-1/2 bottom-3 sm:left-4 sm:translate-x-0 sm:top-1/2 sm:-translate-y-1/2 z-50 bg-white/80 backdrop-blur-xl border border-white/80 p-2 sm:p-2.5 rounded-full sm:rounded-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.12)] flex flex-row sm:flex-col items-center gap-2.5 sm:gap-3 h-auto max-h-fit">
+    <button onclick="setTheme('purple')" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-purple-600 border-2 border-white shadow-md hover:scale-125 transition active:scale-95 focus:outline-none cursor-pointer" title="Purple Theme"></button>
+    <button onclick="setTheme('blue')" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-blue-600 border-2 border-white shadow-md hover:scale-125 transition active:scale-95 focus:outline-none cursor-pointer" title="Blue Theme"></button>
+    <button onclick="setTheme('emerald')" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-emerald-600 border-2 border-white shadow-md hover:scale-125 transition active:scale-95 focus:outline-none cursor-pointer" title="Emerald Theme"></button>
+    <button onclick="setTheme('rose')" class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-rose-600 border-2 border-white shadow-md hover:scale-125 transition active:scale-95 focus:outline-none cursor-pointer" title="Rose Theme"></button>
+  </div>
+
+  <!-- HEADER NAVIGATION -->
+  <header class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[94vw] max-w-5xl" id="mainHeader">
+    <nav id="navBar" class="bg-white/85 backdrop-blur-2xl border border-white/80 rounded-full px-5 sm:px-7 py-3 shadow-[0_20px_50px_rgba(0,0,0,0.12)] flex items-center justify-between text-gray-800 relative transition-all duration-300">
+      
+      <!-- LOGO -->
+      <a href="index.html" class="text-xl font-bold tracking-tight text-gray-900 font-serif">
+        Mudasir<span class="text-theme-primary">.</span>
+      </a>
+      
+      <!-- DESKTOP NAVIGATION LINKS -->
+      <div class="hidden md:flex items-center gap-1.5 text-xs font-semibold text-gray-700">
+        <a href="index.html" class="px-3.5 py-1.5 rounded-full hover:text-theme-primary transition">Home</a>
+        <a href="projects.html" class="px-3.5 py-1.5 rounded-full hover:text-theme-primary transition">Projects</a>
+        <a href="skills.html" class="px-3.5 py-1.5 rounded-full bg-theme-primary text-white font-bold shadow-sm transition">Skills</a>
+        <a href="pricing.html" class="px-3.5 py-1.5 rounded-full hover:text-theme-primary transition">Pricing</a>
+        <a href="contact.html" class="px-3.5 py-1.5 rounded-full hover:text-theme-primary transition">Contact</a>
+      </div>
+
+      <!-- RIGHT CTA BUTTON -->
+      <div class="hidden md:flex items-center">
+        <button onclick="openConnectModal(event)" class="bg-theme-primary hover:opacity-90 text-white font-bold px-5 py-2 rounded-full text-xs transition duration-300 shadow-md flex items-center gap-1.5 active:scale-95 cursor-pointer">
+          <span>Start a Project</span>
+          <span class="text-sm font-extrabold">↗</span>
+        </button>
+      </div>
+
+      <!-- MOBILE HAMBURGER BUTTON -->
+      <button id="menuToggleBtn" onclick="toggleMobileMenu()" class="md:hidden z-50 w-9 h-9 rounded-full bg-white/80 backdrop-blur-xl border border-gray-200/80 text-gray-900 hover:bg-theme-primary hover:text-white flex items-center justify-center shadow-md transition-all duration-300 active:scale-90 focus:outline-none" aria-label="Toggle Navigation Menu">
+        <i id="menuIcon" class="fa-solid fa-bars-staggered text-sm font-bold"></i>
+      </button>
+
+      <!-- MOBILE OVERLAY MENU -->
+      <div id="mobileMenu" class="inactive absolute top-full left-0 right-0 mt-3 p-5 bg-white border border-gray-200/90 shadow-[0_25px_80px_rgba(0,0,0,0.3)] md:hidden flex flex-col gap-2.5 z-50 overflow-hidden">
+        <a href="index.html" onclick="toggleMobileMenu()" class="mobile-nav-item flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-gray-100/80 font-bold text-sm text-gray-800 transition">
+          <span>Home</span>
+          <i class="fa-solid fa-arrow-right text-xs opacity-50"></i>
+        </a>
+        <a href="projects.html" onclick="toggleMobileMenu()" class="mobile-nav-item flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-gray-100/80 font-bold text-sm text-gray-800 transition">
+          <span>Projects</span>
+          <i class="fa-solid fa-arrow-right text-xs opacity-50"></i>
+        </a>
+        <a href="skills.html" onclick="toggleMobileMenu()" class="mobile-nav-item flex items-center justify-between px-4 py-3 rounded-2xl bg-theme-light text-theme-primary font-bold text-sm transition">
+          <span>Skills</span>
+          <i class="fa-solid fa-check text-xs"></i>
+        </a>
+        <a href="pricing.html" onclick="toggleMobileMenu()" class="mobile-nav-item flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-gray-100/80 font-bold text-sm text-gray-800 transition">
+          <span>Pricing</span>
+          <i class="fa-solid fa-arrow-right text-xs opacity-50"></i>
+        </a>
+        <a href="contact.html" onclick="toggleMobileMenu()" class="mobile-nav-item flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-gray-100/80 font-bold text-sm text-gray-800 transition">
+          <span>Contact</span>
+          <i class="fa-solid fa-arrow-right text-xs opacity-50"></i>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="pt-36 pb-12 px-4 max-w-5xl mx-auto text-center relative z-10">
+    <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md border border-gray-200/80 rounded-full px-4 py-1.5 shadow-sm mb-6">
+      <span class="text-xs font-mono font-bold text-theme-primary uppercase tracking-widest">⚡ 20 Progressive Skill Tiers</span>
+    </div>
+    
+    <h1 class="text-4xl sm:text-6xl font-serif text-gray-900 leading-tight mb-6">
+      Engineering <span class="text-theme-primary italic font-normal">Skills</span> & Hierarchy Roadmap
+    </h1>
+    
+    <p class="font-mono text-sm sm:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
+      From core web fundamentals & CMS builders to advanced React architectures, SEO engines, and autonomous AI agents.
+    </p>
+
+    <!-- FILTER BUTTONS -->
+    <div class="mt-8 flex flex-wrap justify-center gap-2">
+      <button onclick="filterTimelineCategory('all')" class="skills-filter-btn active-tab px-5 py-2 rounded-full text-xs font-bold border border-gray-300 bg-white/80 text-gray-800 hover:border-theme-primary shadow-sm transition cursor-pointer" data-filter="all">All 20 Skills</button>
+      <button onclick="filterTimelineCategory('cms')" class="skills-filter-btn px-5 py-2 rounded-full text-xs font-bold border border-gray-300 bg-white/80 text-gray-800 hover:border-theme-primary shadow-sm transition cursor-pointer" data-filter="cms">CMS & HTML/CSS</button>
+      <button onclick="filterTimelineCategory('frontend')" class="skills-filter-btn px-5 py-2 rounded-full text-xs font-bold border border-gray-300 bg-white/80 text-gray-800 hover:border-theme-primary shadow-sm transition cursor-pointer" data-filter="frontend">Frontend & React</button>
+      <button onclick="filterTimelineCategory('backend')" class="skills-filter-btn px-5 py-2 rounded-full text-xs font-bold border border-gray-300 bg-white/80 text-gray-800 hover:border-theme-primary shadow-sm transition cursor-pointer" data-filter="backend">Backend & DB</button>
+      <button onclick="filterTimelineCategory('seo')" class="skills-filter-btn px-5 py-2 rounded-full text-xs font-bold border border-gray-300 bg-white/80 text-gray-800 hover:border-theme-primary shadow-sm transition cursor-pointer" data-filter="seo">SEO & Rank</button>
+      <button onclick="filterTimelineCategory('ai')" class="skills-filter-btn px-5 py-2 rounded-full text-xs font-bold border border-gray-300 bg-white/80 text-gray-800 hover:border-theme-primary shadow-sm transition cursor-pointer" data-filter="ai">AI & Bots</button>
+    </div>
+  </section>
+
+  <!-- LONG INTERACTIVE SCROLL TIMELINE WITH RESPONSIVE SCROLL LINE -->
+  <section id="skillsTimelineSection" class="py-16 px-4 max-w-5xl mx-auto relative min-h-screen">
+    
+    <!-- STRAIGHT SCROLL LINE (LEFT ON MOBILE / CENTER ON DESKTOP) -->
+    <svg class="skills-line-svg" viewBox="0 0 800 7800" preserveAspectRatio="none">
+      <line x1="400" y1="40" x2="400" y2="7760" class="skills-path-bg" vector-effect="non-scaling-stroke"/>
+      <line id="skillsSvgPath" x1="400" y1="40" x2="400" y2="7760" class="skills-path-active" vector-effect="non-scaling-stroke"/>
+    </svg>
+
+    <!-- 20 PROGRESSIVELY ORDERED SKILL CARDS (PERFECT MOBILE DOT CENTERING ON LINE) -->
+    <div class="space-y-14 sm:space-y-20 relative z-10">
+
+      <!-- ================= TIER 1: CORE FOUNDATIONS & CMS ================= -->
+
+      <!-- SKILL 01: HTML5 -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="cms">
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-orange-500 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 md:text-right order-2 md:order-1">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3 md:justify-end">
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 1 // 01</span>
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-brands fa-html5"></i>
+              </div>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">HTML5 & Semantic Web Architecture</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Foundation of semantic web structure, accessible DOM trees, W3C standards, Schema.org microdata, and SEO-optimized markup.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>Semantic HTML5 Mastery</span>
+                <span>99%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-orange-500 rounded-full" style="--target-width: 99%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 md:justify-end">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Semantic Tags</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">W3C Standards</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">DOM Tree Optimization</span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block md:col-span-5 order-3"></div>
+      </div>
+
+      <!-- SKILL 02: CSS3 -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="cms">
+        <div class="hidden md:block md:col-span-5 order-1"></div>
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-blue-500 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 order-2 md:order-3">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-brands fa-css3-alt"></i>
+              </div>
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 1 // 02</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">CSS3 & Responsive Styling Engines</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Crafting responsive Flexbox and Grid layouts, CSS variables, Keyframes animations, and mobile-first viewports.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>CSS3 Styling Benchmark</span>
+                <span>98%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-blue-500 rounded-full" style="--target-width: 98%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Flexbox & Grid</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">CSS Variables</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Responsive Viewports</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILL 03: WORDPRESS CMS -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="cms">
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-blue-600 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 md:text-right order-2 md:order-1">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3 md:justify-end">
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 1 // 03</span>
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-brands fa-wordpress"></i>
+              </div>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">WordPress CMS & Custom Ecosystem</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Building custom WordPress websites, theme customization, WooCommerce e-commerce setups, and security hardening.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>WordPress CMS Mastery</span>
+                <span>99%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-blue-600 rounded-full" style="--target-width: 99%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 md:justify-end">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Custom WP Themes</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">WooCommerce</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">WP Security</span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block md:col-span-5 order-3"></div>
+      </div>
+
+      <!-- SKILL 04: ELEMENTOR PRO -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="cms">
+        <div class="hidden md:block md:col-span-5 order-1"></div>
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-pink-600 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 order-2 md:order-3">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-solid fa-cube"></i>
+              </div>
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 1 // 04</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Elementor Pro Visual Page Builder</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Designing pixel-perfect, high-speed Elementor layouts, Theme Builder templates, dynamic popups, and custom widget CSS.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>Elementor Pro Benchmark</span>
+                <span>98%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-pink-600 rounded-full" style="--target-width: 98%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Theme Builder</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Dynamic Tags</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Custom CSS Widgets</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILL 05: WPBAKERY PAGE BUILDER -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="cms">
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-sky-600 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 md:text-right order-2 md:order-1">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3 md:justify-end">
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 1 // 05</span>
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-solid fa-layer-group"></i>
+              </div>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">WPBakery Page Builder & Grid Systems</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Customizing enterprise WordPress portals using WPBakery backend/frontend grid structures, shortcodes, and row responsiveness.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>WPBakery Grid Systems</span>
+                <span>95%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-sky-600 rounded-full" style="--target-width: 95%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 md:justify-end">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Backend Grid</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Custom Shortcodes</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Row Responsiveness</span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block md:col-span-5 order-3"></div>
+      </div>
+
+      <!-- ================= TIER 2: ADVANCED STYLING & INTERACTIVITY ================= -->
+
+      <!-- SKILL 06: TAILWIND CSS -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="frontend">
+        <div class="hidden md:block md:col-span-5 order-1"></div>
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-cyan-500 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 order-2 md:order-3">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-cyan-50 text-cyan-500 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-solid fa-wind"></i>
+              </div>
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 2 // 06</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Tailwind CSS Utility Architecture</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Designing custom Tailwind theme engines, utility-first components, ambient glassmorphism cards, and dark/light color systems.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>Tailwind CSS Mastery</span>
+                <span>99%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-cyan-500 rounded-full" style="--target-width: 99%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Tailwind Config</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Glassmorphism UI</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Custom Theme Variables</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILL 07: JAVASCRIPT ES6+ -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="frontend">
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-yellow-400 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 md:text-right order-2 md:order-1">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3 md:justify-end">
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 2 // 07</span>
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-yellow-50 text-yellow-600 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-brands fa-js"></i>
+              </div>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">JavaScript ES6+ & Dynamic DOM Engine</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Engineered calculation engines, interactive modal triggers, state updates, event delegation, Promises, and asynchronous APIs.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>JavaScript ES6+ Score</span>
+                <span>97%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-yellow-400 rounded-full" style="--target-width: 97%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 md:justify-end">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Async / Await</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">DOM Engine</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Event Loops</span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block md:col-span-5 order-3"></div>
+      </div>
+
+      <!-- SKILL 08: GSAP MOTION -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="frontend">
+        <div class="hidden md:block md:col-span-5 order-1"></div>
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-emerald-500 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 order-2 md:order-3">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 2 // 08</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">GSAP Motion & ScrollTrigger Engines</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Engineering high-impact scroll animations, SVG path drawing sequences, LERP interpolation, and interactive timeline triggers.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>GSAP Animation Score</span>
+                <span>95%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-emerald-500 rounded-full" style="--target-width: 95%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">ScrollTrigger</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">SVG Motion</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">LERP Interpolation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILL 09: LENIS SMOOTH SCROLL -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="frontend">
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-purple-500 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 md:text-right order-2 md:order-1">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3 md:justify-end">
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 2 // 09</span>
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-purple-50 text-purple-500 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-solid fa-wave-square"></i>
+              </div>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Lenis Smooth Scroll & Momentum Physics</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Integrating 60fps buttery smooth scroll physics, custom easing curves, and seamless inertia scrolling across desktop and mobile.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>Smooth Scroll Physics</span>
+                <span>98%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-purple-500 rounded-full" style="--target-width: 98%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 md:justify-end">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Lenis Scroll</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Momentum Easing</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">60fps Smooth Scroll</span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block md:col-span-5 order-3"></div>
+      </div>
+
+      <!-- ================= TIER 3: MODERN FRONTEND & UI/UX ================= -->
+
+      <!-- SKILL 10: REACT.JS -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="frontend">
+        <div class="hidden md:block md:col-span-5 order-1"></div>
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-sky-400 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 order-2 md:order-3">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-sky-50 text-sky-400 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-brands fa-react"></i>
+              </div>
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 3 // 10</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">React.js & Component Architecture</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Building modular React component structures, custom Hooks, Virtual DOM optimization, and reactive application state flows.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>React.js Benchmark</span>
+                <span>96%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-sky-400 rounded-full" style="--target-width: 96%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">React Hooks</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Virtual DOM</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">State Architecture</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILL 11: NEXT.JS -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="frontend">
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-black shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 md:text-right order-2 md:order-1">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3 md:justify-end">
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 3 // 11</span>
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-gray-100 text-black flex items-center justify-center text-xl font-black transition duration-300">
+                <span>N</span>
+              </div>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Next.js & Server Side Rendering (SSR)</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Leveraging Next.js App Router, Server Components, Static Site Generation (SSG), and sub-second edge pre-rendering.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>Next.js SSR Benchmark</span>
+                <span>94%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-black rounded-full" style="--target-width: 94%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 md:justify-end">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">App Router</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Server Components</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">SSG / SSR</span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block md:col-span-5 order-3"></div>
+      </div>
+
+      <!-- SKILL 12: FIGMA UI/UX -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="frontend">
+        <div class="hidden md:block md:col-span-5 order-1"></div>
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-pink-500 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 order-2 md:order-3">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-pink-50 text-pink-500 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-brands fa-figma"></i>
+              </div>
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 3 // 12</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Figma Prototyping & Glassmorphic UI</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Designing interactive Figma prototypes, design tokens, color systems, and desktop/mobile viewport frame switchers.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>Figma UI/UX Design Score</span>
+                <span>97%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-pink-500 rounded-full" style="--target-width: 97%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Figma Prototyping</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Glassmorphism</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Design Tokens</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TIER 4: BACKEND & DATABASE ================= -->
+
+      <!-- SKILL 13: NODE.JS & EXPRESS -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="backend">
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-green-600 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 md:text-right order-2 md:order-1">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3 md:justify-end">
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 4 // 13</span>
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-brands fa-node-js"></i>
+              </div>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Node.js & Express REST Backend</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Architecting non-blocking asynchronous backend servers, custom Middleware, JWT authentication, and secure REST endpoints.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>Node.js Server Benchmark</span>
+                <span>94%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-green-600 rounded-full" style="--target-width: 94%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 md:justify-end">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Node.js Server</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Express Middleware</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">JWT Authentication</span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block md:col-span-5 order-3"></div>
+      </div>
+
+      <!-- SKILL 14: PYTHON -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="backend">
+        <div class="hidden md:block md:col-span-5 order-1"></div>
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-blue-600 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 order-2 md:order-3">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-brands fa-python"></i>
+              </div>
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 4 // 14</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Python & Backend Automation Scripting</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Writing automated data processing routines, backend integration scripts, Webhooks, and API data transformation engines.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>Python Scripting Competency</span>
+                <span>92%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-blue-600 rounded-full" style="--target-width: 92%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Python Scripting</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">API Automation</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Data Wrangling</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILL 15: MONGODB -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="backend">
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-emerald-600 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 md:text-right order-2 md:order-1">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3 md:justify-end">
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 4 // 15</span>
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-solid fa-database"></i>
+              </div>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">MongoDB & Database Query Optimization</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Designing scalable NoSQL document schemas, index strategies, fast data retrieval operations, and database query caching.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>Database Query Efficiency</span>
+                <span>93%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-emerald-600 rounded-full" style="--target-width: 93%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 md:justify-end">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">MongoDB NoSQL</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Query Indexing</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Data Aggregation</span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block md:col-span-5 order-3"></div>
+      </div>
+
+      <!-- ================= TIER 5: SEO & SEARCH RANKING ================= -->
+
+      <!-- SKILL 16: RANK MATH SEO PRO -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="seo">
+        <div class="hidden md:block md:col-span-5 order-1"></div>
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-emerald-600 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 order-2 md:order-3">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+              </div>
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 5 // 16</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Rank Math SEO Pro & Rich Schema</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Configuring Rank Math SEO Pro for WordPress, custom Schema.org JSON-LD snippets, sitemap submission, and keyword optimization.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>Rank Math SEO Score</span>
+                <span>99%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-emerald-600 rounded-full" style="--target-width: 99%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Rank Math Pro</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Schema JSON-LD</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">XML Sitemaps</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILL 17: TECHNICAL SEO & WEB VITALS -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="seo">
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-emerald-500 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 md:text-right order-2 md:order-1">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3 md:justify-end">
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 5 // 17</span>
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-solid fa-chart-line"></i>
+              </div>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Technical SEO & Core Web Vitals (99/100)</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Fixing index coverage errors, optimizing LCP/CLS Core Web Vitals, achieving PageSpeed 99/100, and structuring technical on-page SEO.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>PageSpeed & Core Web Vitals</span>
+                <span>99%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-emerald-500 rounded-full" style="--target-width: 99%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 md:justify-end">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">PageSpeed 99/100</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Core Web Vitals</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Index Repairs</span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block md:col-span-5 order-3"></div>
+      </div>
+
+      <!-- SKILL 18: GOOGLE SEARCH CONSOLE -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="seo">
+        <div class="hidden md:block md:col-span-5 order-1"></div>
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-blue-500 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 order-2 md:order-3">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-brands fa-google"></i>
+              </div>
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 5 // 18</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">Search Console Domination & SERP Rank #1</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Managing 19+ verified Google Search Console properties, tracking organic impression growth, and driving clients to SERP #1 rankings.</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>SERP Ranking Success</span>
+                <span>99%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-blue-500 rounded-full" style="--target-width: 99%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Google Search Console</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">19 Verified Proofs</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">SERP #1 Ranking</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TIER 6: AI & AUTONOMOUS AUTOMATION ================= -->
+
+      <!-- SKILL 19: OPENAI & NLP -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="ai">
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-purple-600 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 md:text-right order-2 md:order-1">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3 md:justify-end">
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 6 // 19</span>
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">OpenAI GPT-4 API & NLP Search Engines</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Integrating GPT-4 APIs, prompt engineering pipelines, and natural language movie plot search engines (AI Movie Finder).</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>NLP & AI API Engineering</span>
+                <span>96%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-purple-600 rounded-full" style="--target-width: 96%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 md:justify-end">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">OpenAI GPT-4</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">NLP Plot Search</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Prompt Engineering</span>
+            </div>
+          </div>
+        </div>
+        <div class="hidden md:block md:col-span-5 order-3"></div>
+      </div>
+
+      <!-- SKILL 20: WHATSAPP AI AGENTS -->
+      <div class="skill-timeline-card relative pl-10 md:pl-0 grid grid-cols-1 md:grid-cols-12 gap-6 items-center" data-category="ai">
+        <div class="hidden md:block md:col-span-5 order-1"></div>
+        <div class="absolute left-[18px] md:static md:col-span-2 md:order-2 flex justify-center z-20 top-7">
+          <div class="w-5 h-5 rounded-full bg-white border-4 border-emerald-500 shadow-md"></div>
+        </div>
+        <div class="md:col-span-5 order-2 md:order-3">
+          <div class="bg-white/80 backdrop-blur-2xl p-5 sm:p-7 rounded-[28px] sm:rounded-[32px] border border-white/90 shadow-[0_15px_45px_rgba(0,0,0,0.06)] hover:shadow-2xl transition duration-500 relative group">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="skill-icon-box w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-xl font-bold transition duration-300">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <span class="text-xs font-mono font-bold text-theme-primary bg-theme-light px-3 py-1 rounded-full">TIER 6 // 20</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2">WhatsApp Autonomous AI Agent Bots</h3>
+            <p class="text-gray-600 text-xs leading-relaxed mb-4">Building 24/7 autonomous WhatsApp bots for restaurant table reservations, food menu ordering, and customer support (Showcased in Video Demo).</p>
+            <div class="space-y-1.5 mb-3">
+              <div class="flex justify-between text-xs font-mono font-bold text-gray-700">
+                <span>WhatsApp AI Agent Reliability</span>
+                <span>97%</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
+                <div class="skill-progress-bar h-full bg-emerald-500 rounded-full" style="--target-width: 97%;"></div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">WhatsApp Bot API</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">Table Reservations</span>
+              <span class="text-[10px] font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg text-gray-800 font-bold">24/7 AI Support</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CALL TO ACTION CONTAINER -->
+  <section class="py-20 px-4 max-w-5xl mx-auto relative z-10 text-center">
+    <div class="bg-white/70 backdrop-blur-2xl border border-gray-200/80 p-8 sm:p-12 rounded-[36px] shadow-xl space-y-6">
+      <h3 class="text-2xl sm:text-4xl font-extrabold text-gray-900 font-serif">Have a Project Requiring These Skills?</h3>
+      <p class="text-xs sm:text-sm font-mono text-gray-600 max-w-xl mx-auto">From WordPress/Elementor & React UI to autonomous AI agents, let's engineer a high-speed solution tailored to your goals.</p>
+      <div class="flex flex-wrap justify-center gap-4 pt-2">
+        <button onclick="openConnectModal(event)" class="bg-gray-900 hover:bg-theme-primary text-white font-bold px-8 py-3.5 rounded-full text-xs sm:text-sm shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer">
+          Start a Project →
+        </button>
+        <a href="projects.html" class="bg-white hover:bg-gray-100 text-gray-900 font-bold px-8 py-3.5 rounded-full text-xs sm:text-sm border border-gray-300 shadow-sm transition active:scale-95">
+          View Projects Vault ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-12 border-t border-gray-200/80 text-center relative z-10 bg-white/50 backdrop-blur-xl">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+      <a href="index.html" class="text-xl font-bold tracking-tight text-gray-900 font-serif">
+        Mudasir<span class="text-theme-primary">.</span>
+      </a>
+      
+      <!-- SOCIAL ICONS IN FOOTER -->
+      <div class="flex items-center gap-3">
+        <a href="https://www.upwork.com/freelancers/~010e3d2fe4c66aa9d7?mp_source=share" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-600 hover:text-white border border-green-200 flex items-center justify-center text-xs font-bold transition shadow-sm" title="Upwork Profile">Up</a>
+        <a href="https://www.fiverr.com/s/YLv6AWQ" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-200 flex items-center justify-center text-xs font-black transition shadow-sm" title="Fiverr Pro">fi</a>
+        <a href="https://www.linkedin.com/in/mudasir-azhar?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white border border-blue-200 flex items-center justify-center text-xs transition shadow-sm" title="LinkedIn Profile"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/i___mudasir?igsi=bno0OHQ0c214anl5" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white border border-rose-200 flex items-center justify-center text-xs transition shadow-sm" title="Instagram Profile"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/1YithZ1ELe/" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded-full bg-blue-50 text-blue-700 hover:bg-blue-700 hover:text-white border border-blue-200 flex items-center justify-center text-xs transition shadow-sm" title="Facebook Profile"><i class="fa-brands fa-facebook-f"></i></a>
+      </div>
+
+      <p class="text-xs text-gray-500 font-mono">© 2026 Mudasir. Engineered with Precision & Speed.</p>
+      <button onclick="scrollToTop(event)" class="text-xs font-mono font-bold text-gray-700 hover:text-theme-primary flex items-center gap-1.5 transition cursor-pointer">
+        Back to Top <span class="w-6 h-6 rounded-full bg-gray-100 text-gray-900 flex items-center justify-center text-xs">↑</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- 🚀 "LET'S CONNECT" ANIMATED GLASS POPUP MODAL -->
+  <div id="connectModal" class="inactive fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-slate-950/75 backdrop-blur-2xl transition-all duration-500 overflow-y-auto" onclick="closeConnectModalOnBackdrop(event)">
+    <div id="connectModalContent" class="relative w-full max-w-xl max-h-[88vh] overflow-y-auto bg-white/95 backdrop-blur-3xl border border-white/90 rounded-[28px] sm:rounded-[36px] shadow-[0_25px_80px_rgba(0,0,0,0.35)] p-5 sm:p-8 space-y-5 sm:space-y-6 transform transition-all duration-500 my-auto">
+      
+      <!-- CLOSE BUTTON -->
+      <button onclick="closeConnectModal()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-gray-100 hover:bg-theme-primary hover:text-white text-gray-700 flex items-center justify-center transition-all duration-300 shadow-sm active:scale-90 z-20 focus:outline-none cursor-pointer">
+        <i class="fa-solid fa-xmark text-base font-bold"></i>
+      </button>
+
+      <!-- MODAL HEADER -->
+      <div class="space-y-2 pr-8">
+        <div class="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3.5 py-1 rounded-full text-xs font-mono font-bold border border-emerald-200/80 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Available for New Projects
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-gray-900 font-serif leading-tight">
+          Let's <span class="text-theme-primary italic font-normal">Connect</span> & Build
+        </h3>
+        <p class="text-xs sm:text-sm text-gray-600 font-sans leading-relaxed">
+          Select your preferred platform below to start a conversation, hire me directly, or book a 1-on-1 strategy session.
+        </p>
+      </div>
+
+      <!-- FEATURED FREELANCE & BOOKING PLATFORMS -->
+      <div class="space-y-3 pt-1">
+        <span class="text-[10px] font-mono font-extrabold text-gray-400 uppercase tracking-widest block">Featured Platforms</span>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          
+          <!-- FIVERR -->
+          <a href="https://www.fiverr.com/s/YLv6AWQ" target="_blank" rel="noopener noreferrer" class="connect-option-card group bg-emerald-50/70 hover:bg-emerald-500 hover:text-white p-4 rounded-2xl border border-emerald-200/80 hover:border-emerald-500 shadow-sm flex flex-col justify-between space-y-3 cursor-pointer">
+            <div class="flex items-center justify-between">
+              <div class="w-9 h-9 rounded-xl bg-white text-emerald-600 flex items-center justify-center font-black text-lg shadow-sm group-hover:bg-white/20 group-hover:text-white transition">
+                <span>fi</span>
+              </div>
+              <span class="text-xs font-bold opacity-70 group-hover:translate-x-0.5 transition">↗</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-gray-900 group-hover:text-white transition">Fiverr Pro</h5>
+              <p class="text-[10px] text-gray-600 group-hover:text-emerald-50 font-mono mt-0.5">Order Verified Services</p>
+            </div>
+          </a>
+
+          <!-- UPWORK -->
+          <a href="https://www.upwork.com/freelancers/~010e3d2fe4c66aa9d7?mp_source=share" target="_blank" rel="noopener noreferrer" class="connect-option-card group bg-green-50/70 hover:bg-green-600 hover:text-white p-4 rounded-2xl border border-green-200/80 hover:border-green-600 shadow-sm flex flex-col justify-between space-y-3 cursor-pointer">
+            <div class="flex items-center justify-between">
+              <div class="w-9 h-9 rounded-xl bg-white text-green-600 flex items-center justify-center font-black text-base shadow-sm group-hover:bg-white/20 group-hover:text-white transition">
+                <span>up</span>
+              </div>
+              <span class="text-xs font-bold opacity-70 group-hover:translate-x-0.5 transition">↗</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-gray-900 group-hover:text-white transition">Upwork Top Rated</h5>
+              <p class="text-[10px] text-gray-600 group-hover:text-green-50 font-mono mt-0.5">Direct Contract Hire</p>
+            </div>
+          </a>
+
+          <!-- CALENDLY -->
+          <a href="https://calendly.com/" target="_blank" rel="noopener noreferrer" class="connect-option-card group bg-blue-50/70 hover:bg-blue-600 hover:text-white p-4 rounded-2xl border border-blue-200/80 hover:border-blue-600 shadow-sm flex flex-col justify-between space-y-3 cursor-pointer">
+            <div class="flex items-center justify-between">
+              <div class="w-9 h-9 rounded-xl bg-white text-blue-600 flex items-center justify-center text-sm shadow-sm group-hover:bg-white/20 group-hover:text-white transition">
+                <i class="fa-solid fa-calendar-check"></i>
+              </div>
+              <span class="text-xs font-bold opacity-70 group-hover:translate-x-0.5 transition">↗</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-gray-900 group-hover:text-white transition">Calendly Call</h5>
+              <p class="text-[10px] text-gray-600 group-hover:text-blue-50 font-mono mt-0.5">15-Min Strategy Call</p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- DIRECT MESSAGING & SOCIAL CHANNELS -->
+      <div class="space-y-3 pt-2 border-t border-gray-100">
+        <span class="text-[10px] font-mono font-extrabold text-gray-400 uppercase tracking-widest block">Direct Channels & Socials</span>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+          <a href="https://www.linkedin.com/in/mudasir-azhar?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 p-2.5 rounded-2xl bg-gray-50 hover:bg-blue-50 text-gray-800 hover:text-blue-700 border border-gray-200/80 hover:border-blue-300 font-bold text-xs transition active:scale-95">
+            <i class="fa-brands fa-linkedin text-blue-600 text-sm"></i>
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://www.instagram.com/i___mudasir?igsi=bno0OHQ0c214anl5" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 p-2.5 rounded-2xl bg-gray-50 hover:bg-rose-50 text-gray-800 hover:text-rose-700 border border-gray-200/80 hover:border-rose-300 font-bold text-xs transition active:scale-95">
+            <i class="fa-brands fa-instagram text-rose-500 text-sm"></i>
+            <span>Instagram</span>
+          </a>
+          <a href="https://www.facebook.com/share/1YithZ1ELe/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 p-2.5 rounded-2xl bg-gray-50 hover:bg-blue-50 text-gray-800 hover:text-blue-700 border border-gray-200/80 hover:border-blue-300 font-bold text-xs transition active:scale-95">
+            <i class="fa-brands fa-facebook text-blue-600 text-sm"></i>
+            <span>Facebook</span>
+          </a>
+          <a href="https://www.upwork.com/freelancers/~010e3d2fe4c66aa9d7?mp_source=share" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 p-2.5 rounded-2xl bg-gray-50 hover:bg-green-50 text-gray-800 hover:border-green-300 font-bold text-xs transition active:scale-95">
+            <span class="font-black text-xs text-green-600">Up</span>
+            <span>Upwork</span>
+          </a>
+          <a href="https://www.fiverr.com/s/YLv6AWQ" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-1.5 p-2.5 rounded-2xl bg-gray-50 hover:bg-emerald-50 text-gray-800 hover:border-emerald-300 font-bold text-xs transition active:scale-95">
+            <span class="font-black text-xs text-emerald-600">Fi</span>
+            <span>Fiverr</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lenis JS & Custom JS -->
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
